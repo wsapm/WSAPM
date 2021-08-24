@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>报告详情</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+            <meta content="yes" name="apple-mobile-web-app-capable">
+                <meta content="yes" name="apple-touch-fullscreen">
+                    <meta content="telephone=no,email=no" name="format-detection">
+                        <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+                            <meta name="apple-mobile-web-app-status-bar-style" content="black">
+                                <!-- 启用360浏览器的极速模式(webkit) -->
+                                <meta name="renderer" content="webkit">
+                                    <!-- 避免IE使用兼容模式 -->
+                                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                        <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+                                        <meta name="HandheldFriendly" content="true">
+                                            <!-- 微软的老式浏览器 -->
+                                            <meta name="MobileOptimized" content="320">
+                                                <!-- uc强制竖屏 -->
+                                                <meta name="screen-orientation" content="portrait">
+                                                    <!-- QQ强制竖屏 -->
+                                                    <meta name="x5-orientation" content="portrait">
+                                                        <meta name="msapplication-tap-highlight" content="no">
+                                                            <style>
+                                                                html{font-size:6px}
+                                                                body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+                                                                    margin: 0;
+                                                                    padding: 0;
+                                                                }
+                                                            
+                                                            body {
+                                                                font-family: Helvetica;
+                                                                background: #fff;
+                                                                background-size:100%;
+                                                            }
+                                                            
+                                                            img {
+                                                                border: 0;
+                                                            }
+                                                            
+                                                            li{
+                                                                list-style: none
+                                                            }
+                                                            a{
+                                                                text-decoration: none;
+                                                            }
+                                                            .fl{
+                                                                float:left;
+                                                            }
+                                                            
+                                                            .fr{
+                                                                float:right;
+                                                            }
+                                                            .container {
+                                                                width: 100%;
+                                                                min-height: 100%;
+                                                                height: auto !important
+                                                                background: #fff;
+                                                            }
+                                                            .load-state {
+                                                                width: 100%;
+                                                                padding-top: 31px;
+                                                                text-align: center;
+                                                                color: #FFFFFF;
+                                                                height:73px;
+                                                                background:linear-gradient(360deg,rgba(78,146,255,1) 0%,rgba(9,89,255,1) 100%);
+                                                                border-radius:0px 0px 21px 21px;
+                                                            }
+                                                            .load-state-info{
+                                                                font-size:14px;
+                                                                font-weight:400;
+                                                                line-height:20px;
+                                                                margin-top: -9px;
+                                                            }
+                                                            .load-state-title{
+                                                                height:24px;
+                                                                font-size:17px;
+                                                                font-weight:400;
+                                                                line-height:24px;
+                                                            }
+                                                            .baseinfo {
+                                                                margin: 0 1rem;
+                                                                background: #FFFFFF;
+                                                                position: relative;
+                                                                top: -35px;
+                                                                height:100%;
+                                                                box-shadow:0px 2px 8px 0px rgba(0,0,0,0.15);
+                                                                border-radius:5px;
+                                                                padding: 18px 0px 35px;
+                                                            }
+                                                            .baseinfo-step{
+                                                                max-height: 525px;
+                                                                overflow-y: auto;
+                                                            }
+                                                            .result_title{
+                                                                height:22px;
+                                                                font-size:16px;
+                                                                font-weight:600;
+                                                                color:rgba(29,42,57,1);
+                                                                line-height:22px;
+                                                            }
+                                                            .title_flag{
+                                                                width:4px;
+                                                                height:16px;
+                                                                background:linear-gradient(180deg,rgba(78,146,255,1) 0%,rgba(9,89,255,1) 100%);
+                                                                border-radius:2px;
+                                                                display: inline-block;
+                                                                vertical-align: middle;
+                                                                margin-right: 7px;
+                                                            }
+                                                            .result_content{
+                                                                padding: 7px 22px 23px;
+                                                            }
+                                                            .result_content li{
+                                                                padding: 7px 0;
+                                                                font-size:15px;
+                                                                font-weight:400;
+                                                                color:rgba(55,71,90,1);
+                                                                line-height:21px;
+                                                            }
+                                                            .result_content li .URL{
+                                                                overflow: hidden;
+                                                                white-space: nowrap;
+                                                                text-overflow: ellipsis;
+                                                                display: block;
+                                                            }
+                                                            
+                                                            .site_format{
+                                                                overflow: hidden;
+                                                                white-space: nowrap;
+                                                                text-overflow: ellipsis;
+                                                                max-width: 200px;
+                                                            }
+                                                            .dot{
+                                                                width: 5px;
+                                                                height: 5px;
+                                                                background: rgba(35,111,255,1);
+                                                                display: inline-block;
+                                                                vertical-align: middle;
+                                                                border-radius: 6px;
+                                                                margin-right: 8px;
+                                                            }
+                                                            .error_code{
+                                                                color: #F56060;
+                                                            }
+                                                            .table {
+                                                                margin-top: 16px;
+                                                                width: 100%;
+                                                                max-width: 100%;
+                                                                margin-bottom: 22px;
+                                                                background-color: transparent;
+                                                                border-spacing: 0;
+                                                                border-collapse: collapse;
+                                                            }
+                                                            .table>thead>tr>th {
+                                                                background-color: rgba(190,212,255,0.21);;
+                                                                vertical-align: bottom;
+                                                                border-top: 0;
+                                                                padding-left: 8px;
+                                                                line-height: 1.42857143;
+                                                                font-size:13px;
+                                                                font-weight:400;
+                                                                color:#1D2A39;
+                                                                line-height:18px;
+                                                                padding: 7px 3px;
+                                                            }
+                                                            .table>thead>tr>th:first-child {
+                                                                text-align: left;
+                                                                padding-left: 11px;
+                                                            }
+                                                            .table>tbody>tr>td{
+                                                                padding: 7px 3px;
+                                                                line-height: 1.42857143;
+                                                                vertical-align: top;
+                                                                font-size:13px;
+                                                                font-weight:400;
+                                                                color:#37475A;
+                                                                line-height:18px;
+                                                                text-align: center;
+                                                                vertical-align: middle;
+                                                            }
+                                                            .table>tbody>tr>td:first-child{
+                                                                text-align: left;
+                                                                padding-left: 11px;
+                                                            }
+                                                            .applicability_title{
+                                                                height:18px;
+                                                                font-size:13px;
+                                                                font-weight:400;
+                                                                color:rgba(29,42,57,1);
+                                                                line-height:18px;
+                                                                background-color: rgba(190,212,255,0.2);;
+                                                            }
+                                                            .table.basic_info >tbody>tr>td{
+                                                                text-align: left;
+                                                                height:21px;
+                                                                font-size:15px;
+                                                                font-weight:400;
+                                                                color:#37475A;
+                                                                line-height:21px;
+                                                                word-break: break-all;
+                                                                vertical-align: top;
+                                                            }
+                                                            .table.basic_info >tbody>tr>td:first-child{
+                                                                color:#728295;
+                                                                min-width: 65px;
+                                                            }
+                                                            .check-again{
+                                                                display: inline-block;
+                                                                width: 140px;
+                                                                text-align: center;
+                                                                border-radius:24px;
+                                                                border:1px solid #236FFF;
+                                                                height:22px;
+                                                                font-size:16px;
+                                                                font-weight:400;
+                                                                color:#236FFF;
+                                                                line-height:22px;
+                                                                padding: 8px 0;
+                                                                margin: 16px auto 0;
+                                                            }
+                                                            .btn-report{
+                                                                display: inline-block;
+                                                                width: 140px;
+                                                                background-color: #236FFF;
+                                                                text-align: center;
+                                                                border-radius:24px;
+                                                                border:1px solid transparent;
+                                                                height:22px;
+                                                                font-size:16px;
+                                                                font-weight:400;
+                                                                color:#FFFFFF;
+                                                                line-height:22px;
+                                                                padding: 10px 0;
+                                                                margin: 16px 22px 0 0;
+                                                            }
+                                                            .applicability_item_info{
+                                                                cellspacing  : 4px 8px;
+                                                                display: table-row;
+                                                                background-color: rgba(190,212,255,0.12);
+                                                            }
+                                                            tbody.close .applicability_item_info{
+                                                                display: none;
+                                                            }
+                                                            .triangle{
+                                                                width: 0;
+                                                                height: 0;
+                                                                border: 4px solid;
+                                                                border-color: #236FFF transparent transparent;
+                                                                margin-right: 5px;
+                                                                display: inline-block;
+                                                                margin-bottom: 7px;
+                                                            }
+                                                            tbody.close .triangle{
+                                                                transform:rotate(-90deg);
+                                                                -ms-transform:rotate(-90deg); 	/* IE 9 */
+                                                                -moz-transform:rotate(-90deg); 	/* Firefox */
+                                                                -webkit-transform:rotate(-90deg); /* Safari 和 Chrome */
+                                                                -o-transform:rotate(-90deg);
+                                                            }
+                                                            .applicability_item_info_data{
+                                                                display: inline-block;
+                                                                width: calc(100% / 6 - 5px);
+                                                                height:17px;
+                                                                font-size:12px;
+                                                                font-weight:400;
+                                                                color:#37475A;
+                                                                line-height:17px;
+                                                            }
+                                                            .applicability_item_info_data .subdata{
+                                                                height:16px;
+                                                                font-size:11px;
+                                                                font-weight:400;
+                                                                color:rgba(114,130,149,1);
+                                                                line-height:16px;
+                                                            }
+                                                            .warning{
+                                                                color: #F56060;
+                                                            }
+                                                            @media screen and (min-width:321px) and (max-width:375px){html{font-size:5.5px}}
+                                                            @media screen and (min-width:376px) and (max-width:414px){html{font-size:6px}}
+                                                            @media screen and (min-width:415px) and (max-width:639px){html{font-size:7.5px}}
+                                                            @media screen and (min-width:640px) and (max-width:719px){html{font-size:10px}}
+                                                            @media screen and (min-width:720px) and (max-width:749px){html{font-size:11.25px}}
+                                                            @media screen and (min-width:750px) and (max-width:799px){
+                                                                html{font-size:11.75px}
+                                                                .info-content .acce-title {
+                                                                    color: #000;
+                                                                }
+                                                            }
+                                                            @media screen and (min-width:800px){html{font-size:12.5px}}
+                                                            .load-state img{width:181px;height:181px;}
+                                                                </style>
+                                                            </head>
+    <body>
+        <div id="class_load" class="load-state">
+            <div class="load-state-title">报告详情</div>
+        </div>
+        <div class="container">
+            <div class="baseinfo">
+                <div class="baseinfo-step">
+                    <div class="detection_result">
+                        <h3 class="result_title"><span class="title_flag"></span>检测结果</h3>
+                        <ul class="result_content">
+                            ${result_summary}
+                            
+<!--                            <li>-->
+<!--                                <span class="dot"></span>-->
+<!--                                <p style="display: inline;">-->
+<!--                                    <span class="URL">站点https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=http%E5%8D%8F%E8%AE%AE&fenlei=256&oq=%25E8%258D%25A3</span>-->
+<!--                                    <span style="margin-left: 14px;">连接失败，请稍后重试，错误码</span><span class="error_code">4002</span>-->
+<!--                                </p>-->
+<!--                            </li>-->
+
+<!--                            <li><span class="dot"></span>网络连通性较差，错误码<span class="error_code">3XXX</span></li>-->
+<!--                            <li><span class="dot"></span>网络检测未成功开启，错误码<span class="error_code">3XXX</span></li>-->
+<!--                            <li><span class="dot"></span>网络检测未成功开启，错误码<span class="error_code">3XXX</span></li>-->
+<!--                            <li><span class="dot"></span>网络连通性较差，错误码<span class="error_code">3XXX</span></li>-->
+<!--                            <li><span class="dot"></span>网络连通性较差，错误码<span class="error_code">3XXX</span></li>-->
+                        </ul>
+                    </div>
+                    <div class="detection_result">
+                        <h3 class="result_title"><span class="title_flag"></span>网络连通性探测</h3>
+                        <table class="table" border="0">
+                            <thead>
+                                <tr>
+                                    <th>域名</th>
+                                    <th>丢包率</th>
+                                    <th>平均时延</th>
+                                    <th>最小时延</th>
+                                    <th>最大时延</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${ping_summary}
+<!--                                <tr>-->
+<!--                                    <td>www.baidu.com</td>-->
+<!--                                    <td>0%</td>-->
+<!--                                    <td>60ms</td>-->
+<!--                                    <td>40ms</td>-->
+<!--                                    <td>100ms</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>www.baidu.com</td>-->
+<!--                                    <td class="warning">90%</td>-->
+<!--                                    <td>60ms</td>-->
+<!--                                    <td>40ms</td>-->
+<!--                                    <td>100ms</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>www.baidu.com</td>-->
+<!--                                    <td>0%</td>-->
+<!--                                    <td>60ms</td>-->
+<!--                                    <td>40ms</td>-->
+<!--                                    <td>100ms</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>www.baidu.com</td>-->
+<!--                                    <td>0%</td>-->
+<!--                                    <td>60ms</td>-->
+<!--                                    <td>40ms</td>-->
+<!--                                    <td>100ms</td>-->
+<!--                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="detection_result" ${detection_style}>
+                        <h3 class="result_title"><span class="title_flag"></span>站点可用性探测</h3>
+                        <table class="table" border="0" ${detection_ping_style}>
+                            <thead>
+                                <tr>
+                                    <th>域名</th>
+                                    <th>丢包率</th>
+                                    <th>平均时延</th>
+                                    <th>最小时延</th>
+                                    <th>最大时延</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${customPing_summary}
+                            </tbody>
+                        </table>
+                        <table class="table" border="0">
+                            <thead class="applicability_title">
+                                <tr>
+                                    <th>URL</th>
+                                    <th>状态码</th>
+                                    <th>耗时</th>
+                                </tr>
+                            </thead>
+                            ${url_summary}
+<!--                            <tbody>-->
+                                
+<!--                                <tr class="applicability_item">-->
+<!--                                    <td>-->
+<!--                                        <span class="triangle"></span>-->
+<!--                                        <span style="display: inline-block;">-->
+<!--                                            <div>-->
+<!--                                                http://www.baidu.com-->
+<!--                                            </div>-->
+<!--                                            <div>-->
+<!--                                                217.24.123.12-->
+<!--                                            </div>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                    <td>200</td>-->
+<!--                                    <td>5000ms</td>-->
+<!--                                </tr>-->
+<!--                                <tr class="applicability_item_info">-->
+<!--                                    <td colspan="3">-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>DNS</p>-->
+<!--                                            <p class="subdata">76ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Connect</p>-->
+<!--                                            <p class="subdata">113ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>SSL</p>-->
+<!--                                            <p class="subdata">99ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Send</p>-->
+<!--                                            <p class="subdata">Send</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Wait</p>-->
+<!--                                            <p class="subdata">114ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Receive</p>-->
+<!--                                            <p class="subdata">97ms</p>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                            <tbody>-->
+<!--                                <tr class="applicability_item">-->
+<!--                                    <td>-->
+<!--                                        <span class="triangle"></span>-->
+<!--                                        <span style="display: inline-block;">-->
+<!--                                            <div>-->
+<!--                                                http://www.baidu.com-->
+<!--                                            </div>-->
+<!--                                            <div>-->
+<!--                                                217.24.123.12-->
+<!--                                            </div>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                    <td>200</td>-->
+<!--                                    <td>5000ms</td>-->
+<!--                                </tr>-->
+<!--                                <tr class="applicability_item_info">-->
+<!--                                    <td colspan="3">-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>DNS</p>-->
+<!--                                            <p class="subdata">76ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Connect</p>-->
+<!--                                            <p class="subdata">113ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>SSL</p>-->
+<!--                                            <p class="subdata">99ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Send</p>-->
+<!--                                            <p class="subdata">Send</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Wait</p>-->
+<!--                                            <p class="subdata">114ms</p>-->
+<!--                                        </span>-->
+<!--                                        <span class="applicability_item_info_data">-->
+<!--                                            <p>Receive</p>-->
+<!--                                            <p class="subdata">97ms</p>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+                        </table>
+                    </div>
+                    <div class="detection_result">
+                        <h3 class="result_title"><span class="title_flag"></span>基础信息</h3>
+                        <table class="table basic_info">
+                            <tbody>
+                                ${base_info}
+<!--                                <tr>-->
+<!--                                    <td>用户网络</td>-->
+<!--                                    <td>移动-4G</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>客户端IP</td>-->
+<!--                                    <td>移动-4G</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>手机型号</td>-->
+<!--                                    <td>vivo_X20</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>手机系统</td>-->
+<!--                                    <td>android/9</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>APP版本</td>-->
+<!--                                    <td>2.3.6</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>设备标识</td>-->
+<!--                                    <td>3a9d1ea7-8a3f-4a04-9e54-d1d9724aa6c3</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>MID</td>-->
+<!--                                    <td>e5cee276-4503-498b-aabe-a7715dfd3215</td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>DNS列表</td>-->
+<!--                                    <td>112.4.12.200；112.3.1.36</td>-->
+<!--                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <botton onclick="copyReport()"class="btn-report">复制结果</botton>
+                    <botton onclick="reCheck()"class="check-again">重新检测</botton>
+                </div>
+            </div>
+        </div>
+        
+        <script src="./js/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".applicability_item").click(function(){
+                    $(this).parent().toggleClass("close");
+                });
+            });
+        
+        function copyReport(){
+            window.webkit.messageHandlers.wsJSOCActionReportCopy.postMessage(null)
+        };
+        
+        
+        function reCheck(){
+            window.webkit.messageHandlers.wsJSOCActionReportReCheck.postMessage(null)
+            
+        };
+        
+            </script>
+        </body
+        </html>

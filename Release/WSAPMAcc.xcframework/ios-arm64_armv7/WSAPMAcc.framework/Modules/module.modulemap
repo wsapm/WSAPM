@@ -1,0 +1,6 @@
+framework module WSAPMAcc {
+  umbrella header "WSAPMAcc.h"
+
+  export *
+  module * { export * }
+}

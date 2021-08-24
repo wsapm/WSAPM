@@ -1,0 +1,6 @@
+framework module MUFCrashKit {
+  umbrella header "MUFCrashKit.h"
+
+  export *
+  module * { export * }
+}

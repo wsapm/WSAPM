@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>网络检测SDK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="msapplication-tap-highlight" content="no">
+    <style>
+        html{font-size:6px}
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Helvetica;
+            background: #fff;
+            background-size:100%;
+        }
+
+        img {
+            border: 0;
+        }
+
+        li{
+            list-style: none
+        }
+        a{
+            text-decoration: none;
+        }
+        .fl{
+            float:left;
+        }
+
+        .fr{
+            float:right;
+        }
+        .container {
+          width: 100%;
+          min-height: 100%;
+          height: auto !important
+          background: #fff;
+        }
+        .load-state {
+          width: 100%;
+          padding-top: 31px;
+          text-align: center;
+          color: #FFFFFF;
+          height:259px;
+          background:linear-gradient(360deg,rgba(78,146,255,1) 0%,rgba(9,89,255,1) 100%);
+          border-radius:0px 0px 21px 21px;
+        }
+        .load-state-info{
+            font-size:14px;
+            font-weight:400;
+            line-height:20px;
+            margin-top: -9px;
+        }
+        .load-state-title{
+            height:24px;
+            font-size:17px;
+            font-weight:400;
+            line-height:24px;
+        }
+        .baseinfo {
+            margin: 0 1rem;
+            background: #FFFFFF;
+            position: relative;
+            top: -35px;
+            height:396px;
+            box-shadow:0px 2px 8px 0px rgba(0,0,0,0.15);
+            border-radius:5px;
+            padding: 18px 22px 35px;
+        }
+        .baseinfo-step{
+            margin: 17px 9px 0;
+        }
+        .step-detail{
+            min-height:60px;
+            font-size:15px;
+            font-weight:400;
+            color: #37475A;
+            line-height:21px;
+            /* padding: 40px 0 0 0; */
+            border-left: 1px solid #E5E5E5;
+        }
+        /* .step-detail:first-child{
+            padding-top: 0;
+            position: relative;
+            top: -6px;
+            border-left: 1px solid #E5E5E5;
+        } */
+        .step-detail:last-child{
+            /* padding-bottom: 0;
+            position: relative;
+            bottom: -3px; */
+            border-left: 1px solid transparent;
+        }
+        .being-tested{
+            position: relative;
+            left: -10px;
+            top: -10px;
+        }
+        .being-tested-title{
+            vertical-align: top;
+        }
+        .being-tested-item{
+            display: inline-block;
+            position: relative;
+            top: -11px;
+            vertical-align: top;
+            width: calc(100% - 40px);
+            padding-left: 8px;
+        }
+        .spot{
+            width: 13px;
+            height: 13px;
+            display: inline-block;
+            background-color: #E5E5E5;
+            border-radius: 6px;
+            margin: 6px 0px 6px 6px;
+            position: relative;
+            left: -13px;
+            top: -13px;
+        }
+        .check-cancel{
+            display: block;
+            width: calc(100% - 45px);
+            text-align: center;
+            border-radius:24px;
+            border:1px solid #236FFF;
+            height:44px;
+            font-size:16px;
+            font-weight:400;
+            color:#236FFF;
+            line-height:22px;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 18px;
+            background-color: #FFFFFF;
+        }
+        .being-tested-info{
+            font-size:12px;
+            font-weight:400;
+            color:#728295;
+            line-height:17px;
+            margin-left: 2px;
+            margin-top: 6px;
+            word-break: break-all;
+        }
+        .being-tested-info span{
+            color: #F56060;
+        }
+        .load_img_container{
+            width: 181px;
+            height: 181px;
+            background-size: cover;
+            background-image: url(images/back-img.png);
+            margin: -10px auto 0;
+        }
+        .load_img{
+            width: 107px;
+            height: 107px;
+            margin-top: 36px;
+            left: 33px;
+            position: relative;
+        }
+        .failed_img{
+            margin-top: 22px;
+        }
+        .check-again{
+            display: inline-block;
+            width: 140px;
+            text-align: center;
+            border-radius:24px;
+            border:1px solid #FFFFFF;
+            height:22px;
+            font-size:16px;
+            font-weight:400;
+            color:#FFFFFF;
+            line-height:22px;
+            padding: 8px 0;
+            margin: 27px auto 0;
+        }
+        .btn-report{
+            display: inline-block;
+            width: 140px;
+            background-color: #FFFFFF;
+            text-align: center;
+            border-radius:24px;
+            border:1px solid transparent;
+            height:22px;
+            font-size:16px;
+            font-weight:400;
+            color:#236FFF;
+            line-height:22px;
+            padding: 8px 0;
+            margin: 27px 22px 0 0;
+        }
+        .netWork-set{
+            font-size:14px;
+            font-weight:400;
+            color:#236FFF;
+            line-height:20px;
+            float: right;
+        }
+        @-webkit-keyframes rotation{
+            from {-webkit-transform: rotate(0deg);}
+            to {-webkit-transform: rotate(360deg);}
+        }
+        
+        .Rotation{
+            -webkit-transform: rotate(360deg);
+            animation: rotation 3s linear infinite;
+            -moz-animation: rotation 3s linear infinite;
+            -webkit-animation: rotation 3s linear infinite;
+            -o-animation: rotation 3s linear infinite;
+        }
+        .netWork-set{
+            display: none;
+            cursor: pointer;
+        }
+        @media screen and (min-width:321px) and (max-width:375px){html{font-size:5.5px}}
+        @media screen and (min-width:376px) and (max-width:414px){html{font-size:6px}}
+        @media screen and (min-width:415px) and (max-width:639px){html{font-size:7.5px}}
+        @media screen and (min-width:640px) and (max-width:719px){html{font-size:10px}}
+        @media screen and (min-width:720px) and (max-width:749px){html{font-size:11.25px}}
+        @media screen and (min-width:750px) and (max-width:799px){
+            html{font-size:11.75px}
+            .info-content .acce-title {
+                color: #000;
+            }
+        }
+        @media screen and (min-width:800px){html{font-size:12.5px}}
+        /* .load-state img{width:181px;height:181px;} */
+        @-webkit-keyframes rotation{
+            from {-webkit-transform: rotate(0deg);}
+            to {-webkit-transform: rotate(360deg);}
+        }
+        
+        .Rotation{
+        -webkit-transform: rotate(360deg);
+        animation: rotation 3s linear infinite;
+        -moz-animation: rotation 3s linear infinite;
+        -webkit-animation: rotation 3s linear infinite;
+        -o-animation: rotation 3s linear infinite;
+        }
+        .point1{
+            position: relative;
+            top: -23px;
+            right: 5px;
+        }
+        .point2{
+            position: relative;
+            top: -24px;
+            right:10px;
+        }
+        .point3{
+            position: relative;
+            top: -5px;
+            left: -60px;
+        }
+        .shine1 {
+            animation: opacity-change1 1.75s ease-in-out infinite;
+            -webkit-animation: opacity-change1 1.75s ease-in-out infinite;
+            -moz-animation: opacity-change1 1.75s ease-in-out infinite;
+            -o-animation: opacity-change1 1.75s ease-in-out infinite;
+        }
+        @keyframes opacity-change1 {
+            0% {
+                opacity: 0.2;
+            }
+            30% {
+                opacity: 0.7;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.2;
+            }
+        }
+        .shine2 {
+            animation: opacity-change2 1.75s ease-in-out infinite;
+            -webkit-animation: opacity-change2 1.75s ease-in-out infinite;
+            -moz-animation: opacity-change2 1.75s ease-in-out infinite;
+            -o-animation: opacity-change2 1.75s ease-in-out infinite;
+        }
+        @keyframes opacity-change2 {
+            0% {
+                opacity: 0.7;
+            }
+            30% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+        .shine3 {
+            animation: opacity-change3 1.75s ease-in-out infinite;
+            -webkit-animation: opacity-change3 1.75s ease-in-out infinite;
+            -moz-animation: opacity-change3 1.75s ease-in-out infinite;
+            -o-animation: opacity-change3 1.75s ease-in-out infinite;
+        }
+        @keyframes opacity-change3 {
+            0% {
+                opacity: 1;
+            }
+            30% {
+                opacity: 0.2;
+            }
+            70% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="class_load" class="load-state">
+        <div class="load-state-title">网络检测</div>
+        <div class="load_img_container">
+            <img id="load_img"  class="load_img Rotation" src="./images/scaning.png">
+            <img class="point1 shine1" src="./images/point1.png" >
+            <img class="point2 shine2" src="./images/point2.png" >
+            <img class="point3 shine3" src="./images/point3.png" >
+        </div>
+        <div id="load_hint" class="load-state-info"></div>
+    </div>
+    
+	<div id="load_failed" class="load-state" style="display: none;">
+		<div class="load-state-title">网络检测</div>
+		<img id="detection_failed"   class="failed_img" style="width: 89px;height: 89px;" src="./images/check-failed.png">
+		<div>
+			<botton onclick="reCheck()" class="check-again">重新检测</botton>
+		</div>
+	</div>	
+	<div id="load_failed_report" class="load-state" style="display: none;">
+		<div class="load-state-title">网络检测</div>
+		<img id="detection_failed"   class="failed_img" style="width: 89px;height: 89px;" src="./images/check-failed.png">
+		<div>
+			<botton onclick="loadReport()" class="btn-report">查看报告</botton>
+			<botton onclick="reCheck()"class="check-again">重新检测</botton>
+		</div>
+	</div>	
+	<div id="check_waring" class="load-state" style="display: none;">
+		<div class="load-state-title">网络检测</div>
+		<img id="detection_warning"   class="failed_img" style="width: 89px;height: 89px;" src="./images/check-warning.png">
+		<div>
+			<botton onclick="loadReport()" class="btn-report">查看报告</botton>
+			<botton onclick="reCheck()" class="check-again">重新检测</botton>
+		</div>
+	</div>
+	<div id="check_success" class="load-state" style="display: none;">
+		<div class="load-state-title">网络检测</div>
+		<img id="detection_success"   class="failed_img" style="width: 89px;height: 89px;" src="./images/check-success.png">
+		<div>
+			<botton onclick="loadReport()"class="btn-report">查看报告</botton>
+			<botton onclick="reCheck()" class="check-again">重新检测</botton>
+		</div>
+	</div>	
+
+    <div class="container">
+        <div class="baseinfo">
+        	<div class="baseinfo-step">
+        		<div class="step-detail">
+					<span id="first-step-spot" class="spot"></span>
+					<img id="first-step-running" class="being-tested Rotation" src="./images/detection-running.png" style="display: none;">
+					<img id="first-step-error" class="being-tested" src="./images/detection-error.png"  style="display: none;">
+                    <img id="first-step-warning" class="being-tested" src="./images/detection-warning.png"  style="display: none;">
+                    <img id="first-step-success" class="being-tested" src="./images/detection-success.png"  style="display: none;">
+					<div class="being-tested-item">
+						<div class="being-tested-title">网络检测功能启动</div>
+						<p id="first-step-info" class="being-tested-info"></p>
+					</div>
+				</div>
+        		<div class="step-detail">
+					<span id="second-step-spot" class="spot"></span>
+					<img id="second-step-running" class="being-tested Rotation" src="./images/detection-running.png" style="display: none;">
+					<img id="second-step-error" class="being-tested" src="./images/detection-error.png"  style="display: none;">
+                    <img id="second-step-warning" class="being-tested" src="./images/detection-warning.png"  style="display: none;">
+                    <img id="second-step-success" class="being-tested" src="./images/detection-success.png"  style="display: none;">
+					<div class="being-tested-item">
+						<div class="being-tested-title">本地网络配置检测<span id="second-netWork-set" class="netWork-set" onclick="settingNetwork()">设置网络 ></span></div>
+						<p id="second-step-info" class="being-tested-info"></p>
+					</div>
+				</div>
+        		<div class="step-detail">
+					<span id="third-step-spot" class="spot"></span>
+					<img id="third-step-running" class="being-tested Rotation" src="./images/detection-running.png" style="display: none;">
+					<img id="third-step-error" class="being-tested" src="./images/detection-error.png"  style="display: none;">
+                    <img id="third-step-warning" class="being-tested" src="./images/detection-warning.png"  style="display: none;">
+                    <img id="third-step-success" class="being-tested" src="./images/detection-success.png"  style="display: none;">
+					<div class="being-tested-item">
+						<div class="being-tested-title">网络连通性检测<span id="third-netWork-set" class="netWork-set" onclick="settingNetwork()">设置网络 ></span></div>
+						<p id="third-step-info" class="being-tested-info"></p>
+					</div>
+				</div>
+        		<div class="step-detail">
+					<span id="fourth-step-spot" class="spot"></span>
+					<img id="fourth-step-running" class="being-tested Rotation" src="./images/detection-running.png" style="display: none;">
+                    <img id="fourth-step-error" class="being-tested" src="./images/detection-error.png"  style="display: none;">
+                    <img id="fourth-step-warning" class="being-tested" src="./images/detection-warning.png"  style="display: none;">
+					<img id="fourth-step-success" class="being-tested" src="./images/detection-success.png"  style="display: none;">
+					<div class="being-tested-item">
+						<span class="being-tested-title">站点可用性检测</span>
+						<p id="fourth-step-info" class="being-tested-info"></p>
+					</div>
+				</div>
+        	</div>
+			<button id="btn_check-cancel" onclick="cancelCheck()" class="check-cancel">取消检测</button>
+		</div>
+	</div>
+	<script>
+		function showChecking(){
+			document.getElementById("class_load").style.display = "block";
+			document.getElementById("load_failed").style.display = "none";
+			document.getElementById("load_failed_report").style.display = "none";
+			document.getElementById("check_waring").style.display = "none";
+			document.getElementById("check_success").style.display = "none";
+		}
+		function showwarning(){
+			document.getElementById("class_load").style.display = "none";
+			document.getElementById("load_failed").style.display = "none";
+			document.getElementById("load_failed_report").style.display = "none";
+			document.getElementById("check_waring").style.display = "block";
+			document.getElementById("check_success").style.display = "none";
+            hideCancelButton();
+		}
+		function showFailedNoReport(){
+			document.getElementById("class_load").style.display = "none";
+			document.getElementById("load_failed").style.display = "block";
+			document.getElementById("load_failed_report").style.display = "none";
+			document.getElementById("check_waring").style.display = "none";
+			document.getElementById("check_success").style.display = "none";
+            hideCancelButton();
+
+		}
+		function showFailedReport(){
+			document.getElementById("class_load").style.display = "none";
+			document.getElementById("load_failed").style.display = "none";
+			document.getElementById("load_failed_report").style.display = "block";
+			document.getElementById("check_waring").style.display = "none";
+			document.getElementById("check_success").style.display = "none";
+            hideCancelButton();
+
+		}
+		function showSuccess(){
+			document.getElementById("class_load").style.display = "none";
+			document.getElementById("load_failed").style.display = "none";
+			document.getElementById("load_failed_report").style.display = "none";
+			document.getElementById("check_waring").style.display = "none";
+			document.getElementById("check_success").style.display = "block";
+            hideCancelButton();
+		}
+	</script>	
+	<script>
+		function checkFirstStart(){
+			showChecking();
+			document.getElementById("load_hint").innerText = "网络检测功能启动中…";
+			document.getElementById("first-step-spot").style.display = "none";
+			document.getElementById("first-step-running").style.display = "inline-block";
+		}
+		function checkFirstStartFailed(){
+			showFailedNoReport();
+			document.getElementById("first-step-running").style.display = "none";
+            document.getElementById("first-step-spot").style.display = "none";
+
+			document.getElementById("first-step-error").style.display = "inline-block";
+			document.getElementById("first-step-info").innerHTML = "未开启SDK或未配置网络检测功能，不能进行网络检测。";
+		}
+		function checkSecondStart(){
+			document.getElementById("first-step-running").style.display = "none";
+			document.getElementById("first-step-success").style.display = "inline-block";
+			showChecking();
+			document.getElementById("load_hint").innerText = "本地网络配置检测中…";
+			document.getElementById("second-step-spot").style.display = "none";
+			document.getElementById("second-step-running").style.display = "inline-block";
+		}
+		function checkSecondStartFailed(message){
+			showFailedNoReport();
+			document.getElementById("second-step-running").style.display = "none";
+			document.getElementById("second-step-error").style.display = "inline-block";
+			// document.getElementById("second-netWork-set").innerHTML = "设置网络 >";
+			document.getElementById("second-netWork-set").style.display = "block";
+            //document.getElementById("second-step-info").innerHTML = "设备开启了“飞行模式”，请前往网络设置关闭";
+            document.getElementById("second-step-info").innerHTML = message;
+		}
+		function checkThirdStart(message){
+			document.getElementById("second-step-running").style.display = "none";
+			document.getElementById("second-step-success").style.display = "inline-block";
+			showChecking();
+			document.getElementById("load_hint").innerText = "网络连通性检测中…";
+			document.getElementById("third-step-spot").style.display = "none";
+			document.getElementById("third-step-running").style.display = "inline-block";
+		}
+		function checkThirdStartFailed(message){
+			showFailedReport();
+			document.getElementById("third-step-running").style.display = "none";
+			document.getElementById("third-step-error").style.display = "inline-block";
+			// document.getElementById("third-netWork-set").innerHTML = "设置网络 >";
+			document.getElementById("third-netWork-set").style.display = "block";
+            document.getElementById("third-step-info").innerHTML = message;
+           // document.getElementById("third-step-info").innerHTML = "当前网络无法上网，错误码1003，请修复网络后重试";
+		}
+		function checkFourthStart(code,message){
+			document.getElementById("third-step-running").style.display = "none";
+            //显示ping结果
+            checkThirdStartState(code,message);
+			showChecking();
+			document.getElementById("load_hint").innerText = "站点可用性检测中…";
+			document.getElementById("fourth-step-spot").style.display = "none";
+			document.getElementById("fourth-step-running").style.display = "inline-block";
+		}
+    
+        function checkFourthStartWarning(message){
+            showwarning();
+            document.getElementById("fourth-step-running").style.display = "none";
+            document.getElementById("fourth-step-warning").style.display = "inline-block";
+            document.getElementById("fourth-step-info").innerHTML = message;
+            document.getElementById("fourth-step-spot").style.display = "none";
+
+            //"当前有 2 个站点访问异常<br>www.baidu.com<br>www.sohuskubrkjhfsuejfnkshfuejfuejfnksrg…<br>已尝试为您修复，请刷新站点重试";
+        }
+
+		function checkFourthStartFailed(message){
+			showFailedReport();
+			document.getElementById("fourth-step-running").style.display = "none";
+			document.getElementById("fourth-step-error").style.display = "inline-block";
+            document.getElementById("fourth-step-info").innerHTML = message;
+            document.getElementById("fourth-step-spot").style.display = "none";
+
+            //"当前有 2 个站点访问异常<br>www.baidu.com<br>www.sohuskubrkjhfsuejfnkshfuejfuejfnksrg…<br>已尝试为您修复，请刷新站点重试";
+		}
+    
+        function checkThirdStartState(code,message){
+            if(code == 3000) {
+                document.getElementById("third-step-success").style.display = "inline-block";
+
+            } else {
+                document.getElementById("third-step-warning").style.display = "inline-block";
+                document.getElementById("third-netWork-set").style.display = "block";
+                document.getElementById("third-step-info").innerHTML = message;//"当前网络可用,但是质量较差";
+
+            }
+        }
+        function checkThirdStartDoneHadURL(code,message){
+            //document.getElementById("fourth-step-spot").style.display = "none";
+            document.getElementById("third-step-running").style.display = "none";
+            checkThirdStartState(code,message);
+            if(code == 3000) {
+                //showSuccess();
+            } else if (code == 3001){
+                showFailedReport();
+            } else {
+                //有url 除了3001 其他都要继续
+                //showwarning();
+            }
+
+        }
+
+        function checkThirdStartDone(code,message){
+            
+            document.getElementById("third-step-running").style.display = "none";
+            checkThirdStartState(code,message);
+            if(code == 3000) {
+                showSuccess();
+            } else if (code == 3001){
+                showFailedReport();
+                document.getElementById("fourth-step-spot").style.display = "none";
+            } else {
+                showwarning();
+            }
+
+        }
+    
+        function checkFourthStartDone(){
+            document.getElementById("fourth-step-spot").style.display = "none";
+            document.getElementById("fourth-step-running").style.display = "none";
+            document.getElementById("fourth-step-success").style.display = "inline-block";
+            showSuccess();
+        }
+    
+        function cancelCheck(){
+            window.webkit.messageHandlers.wsJSOCActionCancelCheck.postMessage(null)
+        }
+    
+        function loadReport(){
+            window.webkit.messageHandlers.wsJSOCActionReport.postMessage(null)
+        }
+    
+        function reCheck(){
+            window.webkit.messageHandlers.wsJSOCActionReCheck.postMessage(null)
+           
+        }
+    
+        function settingNetwork(){
+            window.webkit.messageHandlers.wsJSOCActionSettingNetwork.postMessage(null)
+           
+        }
+    
+        function hideCancelButton(){
+            document.getElementById("btn_check-cancel").style.display = "none";
+
+        }
+    
+		//checkFirstStart();
+		//checkSecondStart();
+		// checkThirdStart();
+		// checkFourthStart();
+	</script>
+</body>
+</html>

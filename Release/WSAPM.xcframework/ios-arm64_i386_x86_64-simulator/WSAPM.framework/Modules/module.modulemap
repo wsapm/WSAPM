@@ -1,0 +1,6 @@
+framework module WSAPM {
+  umbrella header "WSAPM.h"
+
+  export *
+  module * { export * }
+}
