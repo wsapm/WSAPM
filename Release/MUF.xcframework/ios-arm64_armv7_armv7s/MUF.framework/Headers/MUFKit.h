@@ -59,6 +59,12 @@ typedef void(^RecvMsgBlock)(NSString*);
  */
 - (int)registOriginConnect: (_OriginConnect) originConnect;
 
+///**
+// * 当发生crash的时候，是否需要通知组件
+// * 如果需要通知组件，组件获取到crash的通知后，需要发送消息给MUFCrashKit通知事情处理完成。
+// */
+//- (void)needNotificationWhenCrash:(BOOL)needNotice;
+
 
 /**
  *  获取组件对应的配置信息

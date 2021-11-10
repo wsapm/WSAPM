@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WSApmAcc'
-  s.version          = '2.4.1'
+  s.version          = '2.5.1'
   s.summary          = 'Wangsu APM + ACC'
 
 # This description is used to generate tags and improve search results.

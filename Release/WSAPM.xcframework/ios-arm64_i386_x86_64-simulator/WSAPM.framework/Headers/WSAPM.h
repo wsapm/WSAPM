@@ -117,6 +117,40 @@
  */
 + (void)setURLSessionReuse:(BOOL)enable;
 
+/**
+ *  自定义事件监听
+ *  @param eventID 事件标识、检索，最多32位，但不能包含空格或其他的转义字符
+ *  @param eventTag 分类，最大长度限制为 256字符，超出截取
+ *  @param eventProperties 最多配置64个键值（超出后设置的随机丢弃），key（String，最大长度限制为
+ *  256字符，超出截取，为空丢弃），value（支持Number，String类型，可以为nil、null，长度不能超过4096字符，超出截取），nil、null转为空字符串
+ *  @return 设置是否成功
+ *
+ */
++ (BOOL)monitorEvent:(NSString *_Nonnull)eventID withEventTag:(NSString *_Nullable)eventTag withEventProperties:(NSDictionary *_Nullable)eventProperties;
+
+/**
+ *  不存在异常堆栈的自定义异常监听
+ *  @param message 消息 ， 不可以传空，空返回异常，最大长度1024字符，超出截取前1024字符
+ *  @param metaData 元数据，最多配置64个键值（超出后设置的部分随机丢弃），key（String，最大长度限制为
+ *  256字符，超出截取，为空或则存在其他转义字符丢弃），value（支持Number，String类型，可以为nil、null，长度不能超过4096字符，超出截取），nil、null转为空字符串
+ *  @return 设置是否成功
+ *
+ */
++ (BOOL)monitorError:(NSString *_Nonnull)message withMetaData:(NSDictionary *_Nullable)metaData;
+
+/**
+ *  存在异常堆栈的自定义异常监听
+ *  @param message 消息 ， 不可以传空，空返回异常，最大长度1024字符，超出截取前1024字符
+ *  @param exception 异常
+ *  @param metaData 元数据，最多配置64个键值（超出后设置的部分随机丢弃），key（String，最大长度限制为
+ *  256字符，超出截取，为空或则存在其他转义字符丢弃），value（支持Number，String类型，可以为nil、null，长度不能超过4096字符，超出截取），nil、null转为空字符串
+ *  @return 设置是否成功
+ *
+ */
++ (BOOL)monitorError:(NSString *_Nonnull)message withException:(NSException *_Nullable)exception withMetaData:(NSDictionary *_Nullable)metaData;
+
+
+
 
 @end
 
